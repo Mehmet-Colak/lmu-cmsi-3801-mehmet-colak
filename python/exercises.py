@@ -22,6 +22,14 @@ def first_then_lower_case(strings: list[str], predicate: callable) -> str:
     return None
 
 # Write your powers generator here
+def powers_generator(base: int, limit: int) -> int:
+    power = 0
+    while True:
+        result = base ** power
+        if result > limit:
+            break
+        yield result
+        power += 1
 
 
 # Write your say function here
