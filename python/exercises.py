@@ -31,9 +31,11 @@ def powers_generator(base: int, limit: int) -> int:
         yield result
         power += 1
 
-
 # Write your say function here
-
+def say(collecting = "") -> str:
+    def concat(collected):
+        return (collecting + collected)
+    return concat()
 
 # Write your line count function here
 
