@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from collections.abc import Callable
-from typing import Optional, Generator
+from typing import Optional, Generator, Union
 
 
 def change(amount: int) -> dict[int, int]:
@@ -33,10 +33,19 @@ def powers_generator(*, limit: int, base: int) -> Generator[int, None, None]:
         power += 1
 
 # Write your say function here
-def say(collecting = "") -> str:
-    def concat(collected):
-        return (collecting + collected)
-    return concat()
+def say(message = None, /) -> Union[str, Callable]:
+    if message == None:
+        return ""
+    else:
+        class sayer:
+            def __init__(self, message: Optional[str] = None):
+                self.message = message
+            def __call__(self, next: Optional[str] = None) -> Optional[Union[str, "sayer"]]:
+                if type(next) is str and type(self.message) is str:
+                    return sayer(self.message + " " + next)
+                else:
+                    return self.message
+        return sayer(message)
 
 # Write your line count function here
 
