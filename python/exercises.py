@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from collections.abc import Callable
+from typing import Optional
 
 
 def change(amount: int) -> dict[int, int]:
@@ -14,7 +15,7 @@ def change(amount: int) -> dict[int, int]:
 
 
 # Write your first then lower case function here
-def first_then_lower_case(strings: list[str], predicate: callable) -> str:
+def first_then_lower_case(strings: list[str], predicate: Callable, /) -> Optional[str]     :
     for i in range(len(strings)):
         strings[i] = strings[i].lower()
         if predicate(strings[i]) == True:
@@ -22,7 +23,7 @@ def first_then_lower_case(strings: list[str], predicate: callable) -> str:
     return None
 
 # Write your powers generator here
-def powers_generator(base: int, limit: int) -> int:
+def powers_generator(*, base: int, limit: int) -> int:
     power = 0
     while True:
         result = base ** power
