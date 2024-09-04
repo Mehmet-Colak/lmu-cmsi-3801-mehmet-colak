@@ -138,4 +138,7 @@ class Quaternion:
         else:
             quat_desc += str(self.d) + "k"
         
+        if self.a == 0 and self.b == 0 and self.c == 0 and self.d == 0:
+            quat_desc = "0"
+        
         return quat_desc
