@@ -95,9 +95,9 @@ class Quaternion:
     #@overload
     def __mul__(self, other: "Quaternion") -> "Quaternion": 
         mul_a: int = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
-        mul_b: int = self.a * other.b + self.b * other.a - self.c * other.d + self.d * other.c
-        mul_c: int = self.a * other.c + self.b * other.d + self.c * other.a - self.d * other.b
-        mul_d: int = self.a * other.d - self.b * other.c + self.c * other.b + self.d * other.a
+        mul_b: int = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
+        mul_c: int = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
+        mul_d: int = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
         return Quaternion(mul_a, mul_b, mul_c, mul_d)
     
     #@overload
