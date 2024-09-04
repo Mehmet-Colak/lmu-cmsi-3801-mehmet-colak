@@ -67,67 +67,75 @@ def meaningful_line_count(filename: str, /) -> int:
 
 # Write your Quaternion class here
 
-#Use a frozen dataclass NO IDEA
-#Overload the operators (+, *, and ==) WORKING
+#Use a frozen dataclass DONE
+#Overload the operators (+, *, and ==) DONE
 #Require positional arguments DONE
 #Make the conjugate and coefficients methods @propertys. NO IDEA
+@dataclass(frozen=True)
 class Quaternion:
-    def __init__(self, a: int, b: int, c: int, d: int, /) -> None:
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
+    a: int
+    b: int
+    c: int
+    d: int
     
+    @property
+    def coefficients(self):
+        return (self.a, self.b, self.c, self.d)
+    
+    @property
+    def conjugate(self):
+        return Quaternion(self.a, -self.b, -self.c, -self.d)
+
     #are we overwriting our current powers?
 
-    @overload
+    #@overload
     def __add__(self, other: "Quaternion") -> "Quaternion":
-        return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d).__str__
+        return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
 
-    @overload
-    def __mul__(self, other: "Quaternion") -> "Quaternion":
-        return Quaternion(self.a * other.a, self.b * other.b, self.c * other.c, self.d * other.d)
+    #@overload
+    def __mul__(self, other: "Quaternion") -> "Quaternion": 
+        mul_a: int = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
+        mul_b: int = self.a * other.b + self.b * other.a - self.c * other.d + self.d * other.c
+        mul_c: int = self.a * other.c + self.b * other.d + self.c * other.a - self.d * other.b
+        mul_d: int = self.a * other.d - self.b * other.c + self.c * other.b + self.d * other.a
+        return Quaternion(mul_a, mul_b, mul_c, mul_d)
     
-    @overload
+    #@overload
     def __eq__(self, other: "Quaternion") -> bool:
         return (self.a == other.a) and (self.b == other.b) and (self.c == other.c) and (self.d == other.d)
 
-    @overload
+    #@overload
     def __str__(self) -> str:
         quat_desc: str = ""
-        if self.a < 0:
-            quat_desc += "-"
-            quat_desc += self.a
+        if self.a > 0:
+            quat_desc += str(self.a)
         elif self.a == 0:
             pass
         else:
-            quat_desc += self.a
+            quat_desc += str(self.a)
         
-        if self.b < 0:
-            quat_desc += "-"
-            quat_desc += self.a + "i"
+        if self.b > 0:
+            quat_desc += "+"
+            quat_desc += str(self.b) + "i"
         elif self.b == 0:
             pass
         else:
-            quat_desc += "+"
-            quat_desc += self.a + "i"
+            quat_desc += str(self.b) + "i"
         
-        if self.c < 0:
-            quat_desc += "-"
-            quat_desc += self.c + "j"
+        if self.c > 0:
+            quat_desc += "+"
+            quat_desc += str(self.c) + "j"
         elif self.c == 0:
             pass
         else:
-            quat_desc += "+"
-            quat_desc += self.c + "j"
+            quat_desc += str(self.c) + "j"
 
-        if self.d < 0:
-            quat_desc += "-"
-            quat_desc += self.d + "k"
+        if self.d > 0:
+            quat_desc += "+"
+            quat_desc += str(self.d) + "k"
         elif self.d == 0:
             pass
         else:
-            quat_desc += "+"
-            quat_desc += self.d + "k"
+            quat_desc += str(self.d) + "k"
         
         return quat_desc
