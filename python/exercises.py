@@ -37,6 +37,9 @@ def say(message = None, /) -> Union[str, Callable]:
     if message == None:
         return ""
     else:
+        # This effectively allows the function to instantiate a
+        # new function that maintains the state of the message
+        # being created
         class sayer:
             def __init__(self, message: Optional[str] = None):
                 self.message = message
@@ -48,6 +51,18 @@ def say(message = None, /) -> Union[str, Callable]:
         return sayer(message)
 
 # Write your line count function here
+def meaningful_line_count(filename: str, /) -> int:
+    line_count: int = 0
+    # 'with' automatically opens and closes the file
+    # once its code block ends, and can also raise
+    # any relevant exceptions
+    with open(filename, mode='r', encoding="utf-8") as file:
+        for line in file.readlines():
+            stripped = line.strip() # Removes all leading and trailing whitespace
+            if stripped:
+                if stripped[0] != '#': # Guaranteed since stripped cannot be empty here
+                    line_count += 1
+    return line_count
 
 
 # Write your Quaternion class here
