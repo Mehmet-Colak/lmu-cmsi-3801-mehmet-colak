@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from collections.abc import Callable
-from typing import Optional, Generator, Union
+from typing import Optional, Generator, Union, overload
 
 
 def change(amount: int) -> dict[int, int]:
@@ -66,3 +66,70 @@ def meaningful_line_count(filename: str, /) -> int:
 
 
 # Write your Quaternion class here
+
+#Use a frozen dataclass NO IDEA
+#Overload the operators (+, *, and ==) WORKING
+#Require positional arguments DONE
+#Make the conjugate and coefficients methods @propertys. NO IDEA
+class Quaternion:
+    def __init__(self, a: int, b: int, c: int, d: int, /) -> None:
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+    
+    #are we overwriting our current powers?
+
+    @overload
+    def __add__(self, other: "Quaternion") -> "Quaternion":
+        output = Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
+        return output.__str__()
+
+    @overload
+    def __mul__(self, other: "Quaternion") -> "Quaternion":
+        output = Quaternion(self.a * other.a, self.b * other.b, self.c * other.c, self.d * other.d)
+        return output.__str__()
+    
+    @overload
+    def __eq__(self, other: "Quaternion") -> bool:
+        return (self.a == other.a) and (self.b == other.b) and (self.c == other.c) and (self.d == other.d)
+
+    @overload
+    def __str__(self) -> str:
+        quat_desc: str = ""
+        if self.a < 0:
+            quat_desc += "-"
+            quat_desc += self.a
+        elif self.a == 0:
+            pass
+        else:
+            quat_desc += self.a
+        
+        if self.b < 0:
+            quat_desc += "-"
+            quat_desc += self.a + "i"
+        elif self.b == 0:
+            pass
+        else:
+            quat_desc += "+"
+            quat_desc += self.a + "i"
+        
+        if self.c < 0:
+            quat_desc += "-"
+            quat_desc += self.c + "j"
+        elif self.c == 0:
+            pass
+        else:
+            quat_desc += "+"
+            quat_desc += self.c + "j"
+
+        if self.d < 0:
+            quat_desc += "-"
+            quat_desc += self.d + "k"
+        elif self.d == 0:
+            pass
+        else:
+            quat_desc += "+"
+            quat_desc += self.d + "k"
+        
+        return quat_desc
