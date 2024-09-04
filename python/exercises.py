@@ -82,13 +82,11 @@ class Quaternion:
 
     @overload
     def __add__(self, other: "Quaternion") -> "Quaternion":
-        output = Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
-        return output.__str__()
+        return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d).__str__
 
     @overload
     def __mul__(self, other: "Quaternion") -> "Quaternion":
-        output = Quaternion(self.a * other.a, self.b * other.b, self.c * other.c, self.d * other.d)
-        return output.__str__()
+        return Quaternion(self.a * other.a, self.b * other.b, self.c * other.c, self.d * other.d)
     
     @overload
     def __eq__(self, other: "Quaternion") -> bool:
