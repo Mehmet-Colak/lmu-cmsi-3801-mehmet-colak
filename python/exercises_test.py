@@ -104,17 +104,10 @@ expect(j * k == i)
 expect(j + i == Quaternion(0.0, 1.0, 1.0, 0.0))
 
 expect(f"{zero}" == "0")
-#fix
-print("000000000000000")
-print(f"{j}")
-print("000000000000000")
 expect(f"{j}" == "j")
-#fix
 expect(f"{k.conjugate}" == "-k")
 expect(f"{j.conjugate * Quaternion(2.0, 0.0, 0.0, 0.0)}" == "-2.0j")
-#fix
 expect(f"{j + k}" == "j+k")
-#fix
 expect(f"{Quaternion(0.0, -1.0, 0.0, 2.25)}" == "-i+2.25k")
 expect(f"{Quaternion(-20.0, -1.75, 13.0, -2.25)}" == "-20.0-1.75i+13.0j-2.25k")
 expect(f"{Quaternion(-1.0, -2.0, 0.0, 0.0)}" == "-1.0-2.0i")

@@ -79,11 +79,11 @@ class Quaternion:
     d: int
     
     @property
-    def coefficients(self):
+    def coefficients(self) -> tuple[int, int, int, int]:
         return (self.a, self.b, self.c, self.d)
     
     @property
-    def conjugate(self):
+    def conjugate(self) -> "Quaternion":
         return Quaternion(self.a, -self.b, -self.c, -self.d)
 
     #are we overwriting our current powers?
@@ -106,39 +106,14 @@ class Quaternion:
 
     #@overload
     def __str__(self) -> str:
-        quat_desc: str = ""
-        if self.a > 0:
-            quat_desc += str(self.a)
-        elif self.a == 0:
-            pass
-        else:
-            quat_desc += str(self.a)
-        
-        if self.b > 0:
-            quat_desc += "+"
-            quat_desc += str(self.b) + "i"
-        elif self.b == 0:
-            pass
-        else:
-            quat_desc += str(self.b) + "i"
-        
-        if self.c > 0:
-            quat_desc += "+"
-            quat_desc += str(self.c) + "j"
-        elif self.c == 0:
-            pass
-        else:
-            quat_desc += str(self.c) + "j"
+        # Forms the stringified number, including its sign and direction, if applicable, for each coefficient of the quaternion
+        def coef_to_str(coef, comp, /):
+            return ("+" if coef >= 0 else "-") + (str(abs(coef)) if abs(coef) != 1 or not comp else "") + comp
 
-        if self.d > 0:
-            quat_desc += "+"
-            quat_desc += str(self.d) + "k"
-        elif self.d == 0:
-            pass
+        components: tuple[str] = ("", "i", "j", "k")
+        coef_strings: list[str] = [coef_to_str(c, components[i]) for i, c in enumerate(self.coefficients) if c != 0]
+        if not coef_strings:
+            return "0"
         else:
-            quat_desc += str(self.d) + "k"
-        
-        if self.a == 0 and self.b == 0 and self.c == 0 and self.d == 0:
-            quat_desc = "0"
-        
-        return quat_desc
+            coef_string = "".join(coef_strings)
+            return coef_string[1:] if coef_string[0] == '+' else coef_string
