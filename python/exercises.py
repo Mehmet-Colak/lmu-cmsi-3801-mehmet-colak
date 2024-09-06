@@ -79,20 +79,16 @@ class Quaternion:
     d: int
     
     @property
-    def coefficients(self) -> tuple[int, int, int, int]:
+    def coefficients(self):
         return (self.a, self.b, self.c, self.d)
     
     @property
-    def conjugate(self) -> "Quaternion":
+    def conjugate(self):
         return Quaternion(self.a, -self.b, -self.c, -self.d)
 
-    #are we overwriting our current powers?
-
-    #@overload
     def __add__(self, other: "Quaternion") -> "Quaternion":
         return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
 
-    #@overload
     def __mul__(self, other: "Quaternion") -> "Quaternion": 
         mul_a: int = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
         mul_b: int = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
@@ -100,17 +96,17 @@ class Quaternion:
         mul_d: int = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
         return Quaternion(mul_a, mul_b, mul_c, mul_d)
     
-    #@overload
-    def __eq__(self, other: "Quaternion") -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Quaternion):
+            return NotImplemented
         return (self.a == other.a) and (self.b == other.b) and (self.c == other.c) and (self.d == other.d)
 
-    #@overload
     def __str__(self) -> str:
         # Forms the stringified number, including its sign and direction, if applicable, for each coefficient of the quaternion
         def coef_to_str(coef, comp, /):
             return ("+" if coef >= 0 else "-") + (str(abs(coef)) if abs(coef) != 1 or not comp else "") + comp
 
-        components: tuple[str] = ("", "i", "j", "k")
+        components = ("", "i", "j", "k")
         coef_strings: list[str] = [coef_to_str(c, components[i]) for i, c in enumerate(self.coefficients) if c != 0]
         if not coef_strings:
             return "0"
