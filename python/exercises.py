@@ -53,14 +53,11 @@ def say(message = None, /) -> Union[str, Callable]:
 # Write your line count function here
 def meaningful_line_count(filename: str, /) -> int:
     line_count: int = 0
-    # 'with' automatically opens and closes the file
-    # once its code block ends, and can also raise
-    # any relevant exceptions
     with open(filename, mode='r', encoding="utf-8") as file:
         for line in file.readlines():
-            stripped = line.strip() # Removes all leading and trailing whitespace
+            stripped = line.strip()
             if stripped:
-                if stripped[0] != '#': # Guaranteed since stripped cannot be empty here
+                if stripped[0] != '#':
                     line_count += 1
     return line_count
 
