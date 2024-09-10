@@ -38,6 +38,15 @@ export function* powersGenerator({ ofBase: base, upTo: limit }){
 // Write your say function here
 export function say(message) {
   if (message === undefined) {
+    return ""
+  }
+  const addIt = secondMessage => secondMessage===undefined ? message : say(message + " " + secondMessage)
+  return addIt
+  
+  
+  
+  
+  if (message === undefined) {
     return "";
   }
 
