@@ -42,27 +42,6 @@ export function say(message) {
   }
   const addIt = secondMessage => secondMessage===undefined ? message : say(message + " " + secondMessage)
   return addIt
-  
-  
-  
-  
-  if (message === undefined) {
-    return "";
-  }
-
-  function sayer(message) {
-    this.message = message;
-  }
-
-  sayer.prototype.call = function(next) {
-    if (typeof next === 'string' && typeof this.message === 'string') {
-      return new sayer(this.message + " " + next);
-    } else {
-      return this.message;
-    }
-  };
-
-  return new sayer(message);
 }
 
 // Write your line count function here
