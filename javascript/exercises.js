@@ -1,3 +1,4 @@
+import { count } from "node:console"
 import { open } from "node:fs/promises"
 
 export function change(amount) {
@@ -45,5 +46,21 @@ export function say(message) {
 }
 
 // Write your line count function here
+export async function meaningfulLineCount(filename) {
+  let counts = 0
+  const file = await open(filename, 'r')
+  for await (const line of file.readLines()) {
+    const stripped = line.trim()
+    if (stripped) {
+      if (stripped[0] != '#'){
+        counts += 1
+      }
+    }
+  }
+  if (counts == 0){
+    throw new Error('No such line.')
+  }
+  return counts
+}
 
 // Write your Quaternion class here
