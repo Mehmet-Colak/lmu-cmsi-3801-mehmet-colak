@@ -58,15 +58,15 @@ public class ExercisesTest {
 
         // Uncomment the following tests as you complete the exercises
 
-        // suite("firstThenLowerCase");
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of(), s -> !s.isEmpty()).isEmpty());
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("", "A", "B"), s -> !s.isEmpty()).get().equals("a"));
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("", "A", "ABC"), s -> s.length() > 3).isEmpty());
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("ABC", "ABCD", "ABCDE"), s -> s.length() > 3).get().equals("abcd"));
+        suite("firstThenLowerCase");
+        expect(Exercises.firstThenLowerCase(
+                List.of(), s -> !s.isEmpty()).isEmpty());
+        expect(Exercises.firstThenLowerCase(
+                List.of("", "A", "B"), s -> !s.isEmpty()).get().equals("a"));
+        expect(Exercises.firstThenLowerCase(
+                List.of("", "A", "ABC"), s -> s.length() > 3).isEmpty());
+        expect(Exercises.firstThenLowerCase(
+                List.of("ABC", "ABCD", "ABCDE"), s -> s.length() > 3).get().equals("abcd"));
 
         // suite("say");
         // expect(Exercises.say().phrase().equals(""));

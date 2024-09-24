@@ -22,6 +22,12 @@ public class Exercises {
 
     // Write your first then lower case function here
     //
+    static Optional<String> firstThenLowerCase(List<String> a, Predicate<String> p) {
+        return a.stream()
+                    .filter(p)
+                    .findFirst()
+                    .map(x -> x.toLowerCase());
+    }
     // Write your say function here
 
     // Write your line count function here
@@ -29,4 +35,39 @@ public class Exercises {
 
 // Write your Quaternion record class here
 
+// public record Quaternion(double ZERO, double I, double J, double K) {}
+
 // Write your BinarySearchTree sealed interface and its implementations here
+
+// UNFINISHED UNFINISHED
+sealed interface BinarySearchTree permits Empty, Node {
+    int size();
+    boolean contains();
+    BinarySearchTree insert();
+}
+
+final class Empty implements BinarySearchTree {
+    public int size() {
+        return 0;
+    }
+    public boolean contains(String item) {
+        return false;
+    }
+}
+
+final class Node implements BinarySearchTree {
+    final String head;
+    final BinarySearchTree tail;
+    
+    Node(String head, BinarySearchTree tail) {
+        this.head = head;
+        this.tail = tail;
+    }
+    
+    public int size() {}
+
+    public BinarySearchTree insert(String item) {}
+
+    public boolean contains(String item) {}
+}
+// UNFINISHED UNFINISHED
