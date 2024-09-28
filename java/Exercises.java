@@ -3,6 +3,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import javax.lang.model.type.UnionType;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,7 +33,32 @@ public class Exercises {
     }
     // Write your say function here
 
+    public static sayer say(){
+        return new sayer("");
+    }
+
+    public static sayer say(String phrase){
+        return new sayer(phrase);
+    }
+
+    public static record sayer (String phrase){
+        
+        public sayer and (String message){
+            return new sayer(phrase + " " + message);
+        }
+
+    }
+
     // Write your line count function here
+
+    public static int meaningfulLineCount(String filename) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            return (int) reader.lines()
+                    .filter(line -> !line.trim().isEmpty())
+                    .filter(line -> line.trim().charAt(0) != '#')
+                    .count();
+        }
+    }
 }
 
 // Write your Quaternion record class here
@@ -39,35 +67,35 @@ public class Exercises {
 
 // Write your BinarySearchTree sealed interface and its implementations here
 
-// UNFINISHED UNFINISHED
-sealed interface BinarySearchTree permits Empty, Node {
-    int size();
-    boolean contains();
-    BinarySearchTree insert();
-}
+// // UNFINISHED UNFINISHED
+// sealed interface BinarySearchTree permits Empty, Node {
+//     int size();
+//     boolean contains();
+//     BinarySearchTree insert();
+// }
 
-final class Empty implements BinarySearchTree {
-    public int size() {
-        return 0;
-    }
-    public boolean contains(String item) {
-        return false;
-    }
-}
+// final class Empty implements BinarySearchTree {
+//     public int size() {
+//         return 0;
+//     }
+//     public boolean contains(String item) {
+//         return false;
+//     }
+// }
 
-final class Node implements BinarySearchTree {
-    final String head;
-    final BinarySearchTree tail;
+// final class Node implements BinarySearchTree {
+//     final String head;
+//     final BinarySearchTree tail;
     
-    Node(String head, BinarySearchTree tail) {
-        this.head = head;
-        this.tail = tail;
-    }
+//     Node(String head, BinarySearchTree tail) {
+//         this.head = head;
+//         this.tail = tail;
+//     }
     
-    public int size() {}
+//     public int size() {}
 
-    public BinarySearchTree insert(String item) {}
+//     public BinarySearchTree insert(String item) {}
 
-    public boolean contains(String item) {}
-}
-// UNFINISHED UNFINISHED
+//     public boolean contains(String item) {}
+// }
+// // UNFINISHED UNFINISHED
