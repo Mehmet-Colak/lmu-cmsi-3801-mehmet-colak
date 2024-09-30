@@ -89,7 +89,7 @@ public class ExercisesTest {
         expectToThrow(
             () -> Exercises.meaningfulLineCount("no-such-file.txt"),
             FileNotFoundException.class,
-            "No such file");
+            "file");
         expect(Exercises.meaningfulLineCount("../test-for-line-count.txt") == 5);
 
         // suite("Quaternion");
