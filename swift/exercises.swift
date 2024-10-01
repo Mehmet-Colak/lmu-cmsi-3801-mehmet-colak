@@ -53,4 +53,74 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
 
 // Write your Quaternion struct here
 
-// Write your Binary Search Tree enum here
+// PROPERTY OF AARON
+indirect enum BinarySearchTree: CustomStringConvertible {
+    case empty
+    case node(String, BinarySearchTree, BinarySearchTree)
+    
+    var size: Int {
+        switch self {
+            case .empty:
+                return 0
+            case .node(let _, let left, let right):
+                return 1 + left.size + right.size
+        }
+    }
+
+    var description: String {
+        switch self {
+            case .empty:
+                return "()"
+            case .node(let value, let left, let right):
+                // slightly janky solution to allow for .empty's default case
+                var retStr: String = "("
+                switch left {
+                    case .empty:
+                        break
+                    case .node:
+                        retStr += "\(left)"
+                }
+                retStr += "\(value)"
+                switch right {
+                    case .empty:
+                        break
+                    case .node:
+                        retStr += "\(right)"
+                }
+                return retStr + ")"
+        }
+    }
+
+    func insert(_ next: String) -> BinarySearchTree {
+        switch self {
+            case .empty:
+                return .node(next, BinarySearchTree.empty, BinarySearchTree.empty)
+            case .node(let value, let left, let right):
+                if (next == value) {
+                    return self
+                }
+                else {
+                    if (next < value) {
+                        return .node(value, left.insert(next), right)
+                    }
+                    else {
+                        return .node(value, left, right.insert(next))
+                    }
+                }
+        }
+    }
+
+    func contains(_ lookFor: String) -> Bool {
+        switch self {
+            case .empty:
+                return false
+            case .node(let value, let left, let right):
+                if (lookFor == value) {
+                    return true
+                }
+                else {
+                    return (lookFor < value) ? left.contains(lookFor) : right.contains(lookFor)
+                }
+        }
+    }
+}
