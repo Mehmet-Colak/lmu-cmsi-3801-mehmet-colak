@@ -14,9 +14,21 @@ fun change(amount: Long): Map<Int, Long> {
     return counts
 }
 
-// Write your first then lower case function here
+// PROPERTY OF AARON (Translated from Swift code)
+fun firstThenLowerCase(of: List<String>, predicate: (String) -> Boolean): String? {
+    val filtered: List<String> = of.filter(predicate)
+    val first: String? = if (!filtered.isEmpty()) filtered[0] else null
+    return first?.lowercase()
+}
 
-// Write your say function here
+// PROPERTY OF AARON (From the original Swift)
+class say (new_phrase: String = "") {
+    val phrase: String = new_phrase
+    
+    fun and(next_phrase: String): say {
+        return say(phrase + " " + next_phrase)
+    }
+}
 
 // Write your meaningfulLineCount function here
 
