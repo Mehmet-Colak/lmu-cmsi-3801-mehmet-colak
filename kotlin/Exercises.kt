@@ -84,3 +84,51 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
 }
 
 // Write your Binary Search Tree interface and implementing classes here
+//SEABASS (Translated from Swift code)
+// BinarySearchTree (req.) sealed interface with the two nested implementations
+sealed interface BinarySearchTree {
+
+    fun size(): Int
+    fun contains(value: String): Boolean
+    fun insert(value: String): BinarySearchTree
+
+  
+    object Empty : BinarySearchTree {
+        override fun size(): Int = 0
+        override fun contains(value: String): Boolean = false
+        override fun insert(value: String): BinarySearchTree = Node(value, Empty, Empty)
+
+        override fun toString(): String = "()"
+    }
+
+   
+    data class Node(
+        val value: String,
+        val left: BinarySearchTree = Empty,
+        val right: BinarySearchTree = Empty
+    ) : BinarySearchTree {
+        override fun size(): Int = 1 + left.size() + right.size()
+
+        override fun contains(value: String): Boolean {
+            return when {
+                value == this.value -> true
+                value < this.value -> left.contains(value)
+                else -> right.contains(value)
+            }
+        }
+
+        override fun insert(newValue: String): BinarySearchTree {
+            return when {
+                newValue == value -> this
+                newValue < value -> Node(value, left.insert(newValue), right)
+                else -> Node(value, left, right.insert(newValue))
+            }
+        }
+
+        override fun toString(): String {
+            val leftStr = if (left == Empty) "" else left.toString()
+            val rightStr = if (right == Empty) "" else right.toString()
+            return "($leftStr$value$rightStr)"
+        }
+    }
+}

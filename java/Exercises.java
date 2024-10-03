@@ -24,7 +24,7 @@ public class Exercises {
     }
 
     // Write your first then lower case function here
-    //
+    //SEABASS
     static Optional<String> firstThenLowerCase(List<String> a, Predicate<String> p) {
         return a.stream()
                     .filter(p)
@@ -32,7 +32,7 @@ public class Exercises {
                     .map(x -> x.toLowerCase());
     }
     // Write your say function here
-
+    //MEHMET
     public static sayer say(){
         return new sayer("");
     }
@@ -50,7 +50,7 @@ public class Exercises {
     }
 
     // Write your line count function here
-
+    //MEHMET
     public static int meaningfulLineCount(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             return (int) reader.lines()
@@ -62,10 +62,12 @@ public class Exercises {
 }
 
 // Write your Quaternion record class here
+//NICHOLAS
 
 // public record Quaternion(double ZERO, double I, double J, double K) {}
 
 // Write your BinarySearchTree sealed interface and its implementations here
+//NICHOLAS
 
 // // UNFINISHED UNFINISHED
 // sealed interface BinarySearchTree permits Empty, Node {
