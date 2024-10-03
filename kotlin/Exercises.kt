@@ -1,6 +1,7 @@
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
+import kotlin.math.abs
 
 fun change(amount: Long): Map<Int, Long> {
     require(amount >= 0) { "Amount cannot be negative" }
@@ -42,6 +43,12 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         val K = Quaternion(0.0,0.0,0.0,1.0)
     }
     
+    init {
+        require(!a.isNaN() && !b.isNaN() && !c.isNaN() && !d.isNaN()) {
+            "Coordinates can not be NaN"
+        }
+    }
+
     operator fun plus(other: Quaternion): Quaternion {
         return Quaternion(this.a + other.a, this.b + other.b, this.c + other.c, this.d + other.d)
     }
