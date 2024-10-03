@@ -57,13 +57,87 @@ public class Exercises {
                     .filter(line -> !line.trim().isEmpty())
                     .filter(line -> line.trim().charAt(0) != '#')
                     .count();
+        } catch (IOException e){
+            throw e;
         }
     }
 }
 
 // Write your Quaternion record class here
 
-// public record Quaternion(double ZERO, double I, double J, double K) {}
+record Quaternion(double a, double b, double c, double d) {
+    public final static Quaternion ZERO = new Quaternion(0.0, 0.0, 0.0, 0.0);
+    public final static Quaternion I = new Quaternion(0.0, 1.0, 0.0, 0.0);
+    public final static Quaternion J = new Quaternion(0.0, 0.0, 1.0, 0.0);
+    public final static Quaternion K = new Quaternion(0.0, 0.0, 0.0, 1.0);
+
+    public Quaternion {
+        if (Double.isNaN(a) || Double.isNaN(b) || Double.isNaN(c) || Double.isNaN(d)) {
+            throw new IllegalArgumentException("Coefficients cannot be NaN");
+        }
+    }
+
+    Quaternion plus(Quaternion other) {
+        return new Quaternion(a + other.a(), b + other.b(), c + other.c(), d + other.d());
+    }
+
+    Quaternion times(Quaternion other) {
+        return new Quaternion(a * other.a() - b * other.b() - c * other.c() - d * other.d(),
+                          b * other.a() + a * other.b() + c * other.d() - d * other.c(),
+                          a * other.c() - b * other.d() + c * other.a() + d * other.b(),
+                          a * other.d() + b * other.c() - c * other.b() + d * other.a());
+    }
+
+    List<Double> coefficients() {
+        return List.copyOf(List.of(a, b, c, d));
+    }
+
+    Quaternion conjugate() {
+        return new Quaternion(a, -b, -c, -d);
+    }
+
+    private String plusOrMinus(Double coeff) {
+        if (Math.abs(coeff) == 1.0) return ((coeff > 0) ? ("+") : ("-"));
+        return ((coeff > 0) ? ("+") : (""));
+    }
+
+    @Override
+    public String toString() {
+        List<Double> coeffs = this.coefficients();
+        List<String> dims = List.of("","i","j","k");
+        String coeffStr = "";
+        int zeroCounter = 0;
+        for (int i = 0; i < coeffs.size(); i++){
+            if (coeffs.get(i) == 0) {
+                zeroCounter += 1;
+                continue;
+            } else if (i == 0) {
+                coeffStr += Double.toString(coeffs.get(i));
+            } else if (Math.abs(coeffs.get(i)) == 1.0) {
+                coeffStr += (plusOrMinus(coeffs.get(i)) + dims.get(i));
+            } else {
+                coeffStr += (plusOrMinus(coeffs.get(i)) + Double.toString(coeffs.get(i)) + dims.get(i));
+            }
+        }
+        if (zeroCounter == 4) {
+            return "0";
+        } else {
+            if (coeffStr.charAt(0) == '+') {
+                coeffStr = coeffStr.substring(1);
+            }
+            return coeffStr;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Quaternion)) {
+            return false;
+        }
+        Quaternion other = (Quaternion) o;
+        return ((a == other.a()) && (b == other.b()) && (c == other.c()) && (d == other.d()));
+    }
+}
 
 // Write your BinarySearchTree sealed interface and its implementations here
 
