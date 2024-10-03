@@ -144,34 +144,54 @@ record Quaternion(double a, double b, double c, double d) {
 //NICHOLAS
 
 // // UNFINISHED UNFINISHED
-// sealed interface BinarySearchTree permits Empty, Node {
-//     int size();
-//     boolean contains();
-//     BinarySearchTree insert();
-// }
+sealed interface BinarySearchTree permits Empty, Node {
+    int size();
+    boolean contains(String value);
+    BinarySearchTree insert(String value);
+}
 
-// final class Empty implements BinarySearchTree {
-//     public int size() {
-//         return 0;
-//     }
-//     public boolean contains(String item) {
-//         return false;
-//     }
-// }
+final record Empty() implements BinarySearchTree {
+    @Override
+    public int size() {
+        return 0;
+    }
+    @Override
+    public boolean contains(String item) {
+        return false;
+    }
+    @Override
+    public BinarySearchTree insert(String value) {
+        return new Node(value, this, this)
+    }
+    @Override
+    public String toString() {
+        return "()"
+    }
+}
 
-// final class Node implements BinarySearchTree {
-//     final String head;
-//     final BinarySearchTree tail;
+final class Node() implements BinarySearchTree {
+    Node(String value, BinarySearchTree right, BinarySearchTree left) {
+        this.value = value
+        this.right = right
+        this.left = left
+    }
     
-//     Node(String head, BinarySearchTree tail) {
-//         this.head = head;
-//         this.tail = tail;
-//     }
-    
-//     public int size() {}
+    @Override
+    public int size() {
+        
+    }
+    @Override
+    public boolean contains(String value) {
 
-//     public BinarySearchTree insert(String item) {}
+    }
+    @Override
+    public BinarySearchTree insert(String value) {
 
-//     public boolean contains(String item) {}
-// }
+    }
+    @Override
+    public String toString() {
+
+    }
+}
+
 // // UNFINISHED UNFINISHED

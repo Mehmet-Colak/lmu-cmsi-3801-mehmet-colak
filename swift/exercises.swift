@@ -37,14 +37,17 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
     // There is a non-zero chance I am overcomplicating this
     let fileURL: URL = URL(fileURLWithPath: filename)
     // Swift automatically closes files once they leave the scope
+        
     do {
-        let fileData: Data = try Data(contentsOf: fileURL)
-        let fileText: String? = String(data: fileData, encoding: .utf8)
-        let fileLines: [String] = fileText?.components(separatedBy: NSCharacterSet.newlines) ?? []
-        let trimmed: [String] = fileLines.map({$0.trimmingCharacters(in: .whitespacesAndNewlines)})
-        let hasContent: [String] = trimmed.filter({!($0.isEmpty)})
-        let notComment: [String] = hasContent.filter({!($0).hasPrefix("#")})
-        return .success(notComment.count)
+        var lineCount: Int = 0
+        let (bytes, _) = try await URLSession.shared.bytes(from: fileURL)
+        for try await line in bytes.lines {
+            let trimmed: String = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !((trimmed.isEmpty) || (trimmed.hasPrefix("#"))) {
+                lineCount += 1
+            }
+        }
+        return .success(lineCount)
     }
     catch{
         return .failure(NoSuchFileError())
@@ -63,7 +66,7 @@ indirect enum BinarySearchTree: CustomStringConvertible {
         switch self {
             case .empty:
                 return 0
-            case .node(let _, let left, let right):
+            case .node(_, let left, let right):
                 return 1 + left.size + right.size
         }
     }
