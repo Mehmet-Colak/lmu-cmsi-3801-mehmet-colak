@@ -57,6 +57,93 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
 // Write your Quaternion struct here
 //NICHOLAS MEHMET OR SEABAS
 
+//this must be immutable
+indirect struct Quaternion: CustomStringConvertible {
+    let a : Double
+    let b : Double
+    let c : Double
+    let d : Double
+
+    static let ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
+    static let I = Quaternion(0.0, 1.0, 0.0, 0.0)
+    static let J = Quaternion(0.0, 0.0, 1.0, 0.0)
+    static let K = Quaternion(0.0, 0.0, 0.0, 1.0)
+    
+    init(a: Double, b: Double, c:Double, d:Double) {
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+        self.coeffs = [a, b, c, d]
+    }
+
+    //overload add
+    static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
+        return Quaternion(a: lhs.a + rhs.a, b: lhs.b + rhs.b, c: lhs.c + rhs.c, d: lhs.d + rhs.d)
+    }
+
+    //overload multiply
+    //probably wrong?
+    static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
+        let newA = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
+        let newB = lhs.b * rhs.a + lhs.a * rhs.b + lhs.c * rhs.d - lhs.d * rhs.c
+        let newC = lhs.a * rhs.c - lhs.b * rhs.d + lhs.c * rhs.a + lhs.d * rhs.b
+        let newD = lhs.a * rhs.d + lhs.b * rhs.c - lhs.c * rhs.b + lhs.d * rhs.a
+        return Quaternion(a: newA, b: newB, c: newC, d: newD)
+    }
+
+    //coefficients
+    func coefficients() -> [Double] {
+        return [a, b, c, d]
+    }
+
+
+    //conjugation
+    func conjugate() -> Quaternion {
+        return Quaternion(a: self.a, b: -self.b, c: -self.c, d: -self.d)
+    }
+
+    //value based equality
+    static func == (lhs: Quaternion, rhs: Quaternion) -> Bool {
+        return lhs.a == rhs.a && lhs.b == rhs.b && lhs.c == rhs.c && lhs.d == rhs.d
+    }
+
+    //str representation
+    //I directly translated that, I don't know how true it is
+    var description: String {
+        let dims = ["", "i", "j", "k"]
+        var coeffStr = ""
+        var zeroCounter = 0
+
+        for i in 0..<coeffs.count {
+            if coeffs[i] == 0 {
+                zeroCounter += 1
+                continue
+            } else if i == 0 {
+                coeffStr += String(coeffs[i])
+            } else if abs(coeffs[i]) == 1.0 {
+                coeffStr += plusOrMinus(coeffs[i]) + dims[i]
+            } else {
+                coeffStr += plusOrMinus(coeffs[i]) + String(coeffs[i]) + dims[i]
+            }
+        }
+
+        if zeroCounter == 4 {
+            return "0"
+        } else {
+            if coeffStr.first == "+" {
+                coeffStr.removeFirst() // Remove the leading "+"
+            }
+            return coeffStr
+        }
+    }
+
+    private func plusOrMinus(_ value: Double) -> String {
+        return value >= 0 ? "+" : "-"
+    }
+
+}
+
 // PROPERTY OF AARON
 indirect enum BinarySearchTree: CustomStringConvertible {
     case empty
