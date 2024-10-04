@@ -161,36 +161,51 @@ final record Empty() implements BinarySearchTree {
     }
     @Override
     public BinarySearchTree insert(String value) {
-        return new Node(value, this, this)
+        return new Node(value, this, this);
     }
     @Override
     public String toString() {
-        return "()"
+        return "()";
     }
 }
 
-final class Node() implements BinarySearchTree {
+final class Node implements BinarySearchTree {
+    private final String value;
+    private final BinarySearchTree left;
+    private final BinarySearchTree right;
+    
     Node(String value, BinarySearchTree right, BinarySearchTree left) {
-        this.value = value
-        this.right = right
-        this.left = left
+        this.value = value;
+        this.right = right;
+        this.left = left;
     }
     
     @Override
     public int size() {
-        
+        return 1 + right.size() + left.size();
     }
+
     @Override
     public boolean contains(String value) {
-
+        return this.value.equals(value) || left.contains(value) || right.contains(value);
     }
+
     @Override
     public BinarySearchTree insert(String value) {
-
+        if (value.compareTo(this.value) < 0) {
+            return new Node(this.value, left.insert(value), right);
+        } else {
+            return new Node(this.value, left, right.insert(value));
+        }
     }
+
+    private String emptyOrNot(BinarySearchTree node) {
+        return (node instanceof Empty) ? "" : node.toString();
+    }
+
     @Override
     public String toString() {
-
+        return "(" + emptyOrNot(left) + value + emptyOrNot(right) + ")";
     }
 }
 
