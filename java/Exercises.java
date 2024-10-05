@@ -23,16 +23,13 @@ public class Exercises {
         return counts;
     }
 
-    // Write your first then lower case function here
-    //SEABASS
     static Optional<String> firstThenLowerCase(List<String> a, Predicate<String> p) {
         return a.stream()
                     .filter(p)
                     .findFirst()
                     .map(x -> x.toLowerCase());
     }
-    // Write your say function here
-    //MEHMET
+
     public static sayer say(){
         return new sayer("");
     }
@@ -49,8 +46,6 @@ public class Exercises {
 
     }
 
-    // Write your line count function here
-    //MEHMET
     public static int meaningfulLineCount(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             return (int) reader.lines()
@@ -62,9 +57,6 @@ public class Exercises {
         }
     }
 }
-
-// Write your Quaternion record class here
-//NICHOLAS
 
 record Quaternion(double a, double b, double c, double d) {
     public final static Quaternion ZERO = new Quaternion(0.0, 0.0, 0.0, 0.0);
@@ -140,10 +132,6 @@ record Quaternion(double a, double b, double c, double d) {
     }
 }
 
-// Write your BinarySearchTree sealed interface and its implementations here
-//NICHOLAS
-
-// // UNFINISHED UNFINISHED
 sealed interface BinarySearchTree permits Empty, Node {
     int size();
     boolean contains(String value);
@@ -182,20 +170,22 @@ final class Node implements BinarySearchTree {
     
     @Override
     public int size() {
-        return 1 + right.size() + left.size();
+        return 1 + this.right.size() + this.left.size();
     }
 
     @Override
     public boolean contains(String value) {
-        return this.value.equals(value) || left.contains(value) || right.contains(value);
+        return this.value.equals(value) || this.left.contains(value) || this.right.contains(value);
     }
 
     @Override
     public BinarySearchTree insert(String value) {
         if (value.compareTo(this.value) < 0) {
-            return new Node(this.value, left.insert(value), right);
+            return new Node(this.value, this.left.insert(value), this.right);
+        } else if (value.compareTo(this.value) > 0) {
+            return new Node(this.value, this.left, this.right.insert(value));
         } else {
-            return new Node(this.value, left, right.insert(value));
+            return this;
         }
     }
 

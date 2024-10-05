@@ -15,13 +15,11 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
     return .success(counts)
 }
 
-// PROPERTY OF AARON
 func firstThenLowerCase(of: [String], satisfying: (String) -> Bool) -> String? {
     let filtered: Array<String> = of.filter(satisfying)
     return !filtered.isEmpty ? filtered[0].lowercased() : nil
 }
 
-// PROPERTY OF AARON
 struct say {
     let phrase: String
     
@@ -34,7 +32,6 @@ struct say {
     }
 }
 
-// PROPERTY OF AARON
 func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileError> {
 
     let fileURL: URL = URL(fileURLWithPath: filename)
@@ -55,26 +52,19 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
     }
 }
 
-// NICHOLAS MEHMET OR SEABAS
-// this must be immutable
-indirect struct Quaternion: CustomStringConvertible {
-    let a : Double
-    let b : Double
-    let c : Double
-    let d : Double
+struct Quaternion: CustomStringConvertible {
+    // NMK: Looked this up, private(set) allows you to set a default value while still allowing the
+    // default initializer to assign user given values to fields
+    // and making it immutable to the consumer through privatizing the otherwise unsafe var :NMK
+    private(set) var a: Double = 0
+    private(set) var b: Double = 0
+    private(set) var c: Double = 0
+    private(set) var d: Double = 0
 
-    static let ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
-    static let I = Quaternion(0.0, 1.0, 0.0, 0.0)
-    static let J = Quaternion(0.0, 0.0, 1.0, 0.0)
-    static let K = Quaternion(0.0, 0.0, 0.0, 1.0)
-    
-    init(a: Double, b: Double, c:Double, d:Double) {
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
-        self.coeffs = [a, b, c, d]
-    }
+    static let ZERO = Quaternion(a: 0.0, b: 0.0, c: 0.0, d: 0.0)
+    static let I = Quaternion(a: 0.0, b: 1.0, c: 0.0, d: 0.0)
+    static let J = Quaternion(a: 0.0, b: 0.0, c: 1.0, d: 0.0)
+    static let K = Quaternion(a: 0.0, b: 0.0, c: 0.0, d: 1.0)
 
     //overload add
     static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
@@ -82,7 +72,6 @@ indirect struct Quaternion: CustomStringConvertible {
     }
 
     //overload multiply
-    //probably wrong?
     static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
         let newA = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
         let newB = lhs.b * rhs.a + lhs.a * rhs.b + lhs.c * rhs.d - lhs.d * rhs.c
@@ -92,14 +81,14 @@ indirect struct Quaternion: CustomStringConvertible {
     }
 
     //coefficients
-    func coefficients() -> [Double] {
+    var coefficients: [Double] {
         return [a, b, c, d]
     }
 
 
     //conjugation
-    func conjugate() -> Quaternion {
-        return Quaternion(a: self.a, b: -self.b, c: -self.c, d: -self.d)
+    var conjugate: Quaternion {
+        return Quaternion(a: a, b: -b, c: -c, d: -d)
     }
 
     //value based equality
@@ -107,9 +96,16 @@ indirect struct Quaternion: CustomStringConvertible {
         return lhs.a == rhs.a && lhs.b == rhs.b && lhs.c == rhs.c && lhs.d == rhs.d
     }
 
+    private func plusOrMinus(_ coeff: Double) -> String {
+        if (abs(coeff) == 1.0) {
+            return (coeff > 0) ? ("+") : ("-")
+        }
+        return coeff >= 0 ? "+" : ""
+    }
+
     //str representation
-    //I directly translated that, I don't know how true it is
     var description: String {
+        let coeffs: [Double] = self.coefficients
         let dims = ["", "i", "j", "k"]
         var coeffStr = ""
         var zeroCounter = 0
@@ -119,11 +115,11 @@ indirect struct Quaternion: CustomStringConvertible {
                 zeroCounter += 1
                 continue
             } else if i == 0 {
-                coeffStr += String(coeffs[i])
+                coeffStr += "\(coeffs[i])"
             } else if abs(coeffs[i]) == 1.0 {
                 coeffStr += plusOrMinus(coeffs[i]) + dims[i]
             } else {
-                coeffStr += plusOrMinus(coeffs[i]) + String(coeffs[i]) + dims[i]
+                coeffStr += plusOrMinus(coeffs[i]) + "\(coeffs[i])" + dims[i]
             }
         }
 
@@ -136,14 +132,8 @@ indirect struct Quaternion: CustomStringConvertible {
             return coeffStr
         }
     }
-
-    private func plusOrMinus(_ value: Double) -> String {
-        return value >= 0 ? "+" : "-"
-    }
-
 }
 
-// PROPERTY OF AARON
 indirect enum BinarySearchTree: CustomStringConvertible {
     case empty
     case node(String, BinarySearchTree, BinarySearchTree)
