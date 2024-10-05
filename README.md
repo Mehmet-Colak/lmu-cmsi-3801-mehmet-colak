@@ -13,6 +13,7 @@ Your homework submissions will consist of programs in the following languages. T
 - **Homework 1 (Scripting)**: Lua, Python, JavaScript
 - Collaborators: Aaron Mearns, Sebastian Rocha, Nicholas Kasten
 - **Homework 2 (Enterprise)**: Java, Kotlin, Swift
+- Collaborators: Aaron Mearns, Sebastian Rocha, Nicholas Kasten
 - **Homework 3 (Theory)**: TypeScript, OCaml, Haskell
 - **Homework 4 (Systems)**: C, C++, Rust
 - **Homework 5 (Concurrency)**: Go
