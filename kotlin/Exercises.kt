@@ -18,8 +18,7 @@ fun change(amount: Long): Map<Int, Long> {
 // PROPERTY OF AARON (Translated from Swift code)
 fun firstThenLowerCase(of: List<String>, predicate: (String) -> Boolean): String? {
     val filtered: List<String> = of.filter(predicate)
-    val first: String? = if (!filtered.isEmpty()) filtered[0] else null
-    return first?.lowercase()
+    return (if (!filtered.isEmpty()) filtered[0] else null)?.lowercase()
 }
 
 // PROPERTY OF AARON (From the original Swift)
@@ -36,11 +35,13 @@ class say (new_phrase: String = "") {
 fun meaningfulLineCount(filename: String): Long {
   File(filename).bufferedReader().use {
     // Based on the old Swift function
-    val fileLines: List<String> = it.readLines()
-    val trimmed: List<String> = fileLines.map { it.trim() }
-    val hasContent: List<String> = trimmed.filter{ !it.isNullOrBlank() }
-    val notComment: List<String> = hasContent.filter { it.elementAtOrNull(0) != '#'}
-    return notComment.count().toLong()
+    return it.readLines().map { 
+        it.trim() 
+    }.filter{ 
+        !it.isNullOrBlank() 
+    }.filter { 
+        it.elementAtOrNull(0) != '#'
+    }.count().toLong()
   }
 }
 
@@ -88,37 +89,35 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
             val scalar: String = if (abs(coef) != 1.0 || comp.isEmpty()) "${abs(coef)}" else ""
             return "$sign$scalar$comp"
         }
+        
         val components: List<Pair<Double, String>> = listOf(Pair(this.a, ""), Pair(this.b, "i"), Pair(this.c, "j"), Pair(this.d, "k"))
-        val coefFiltered: List<Pair<Double, String>> = components.filter({(coef, _): Pair<Double, String> -> coef != 0.0})
-        val coefStrings: List<String> = coefFiltered.map({(coef, comp): Pair<Double, String> -> coefToString(coef, comp)})
+        val coefStrings: List<String> = components.filter {
+            (coef, _): Pair<Double, String> -> coef != 0.0
+        }.map {
+            (coef, comp): Pair<Double, String> -> coefToString(coef, comp)
+        }
         if (coefStrings.isEmpty()) {
             return "0"
         }
         else {
             val coefString: String = coefStrings.joinToString(separator="")
-          return if (coefString[0] == '+') coefString.substring(1) else coefString
+            return if (coefString[0] == '+') coefString.substring(1) else coefString
         }
     }
 }
 
-// Write your Binary Search Tree interface and implementing classes here
 //SEABASS (Translated from Swift code)
-// BinarySearchTree (req.) sealed interface with the two nested implementations
 sealed interface BinarySearchTree {
-
     fun size(): Int
     fun contains(value: String): Boolean
     fun insert(value: String): BinarySearchTree
-
 
     object Empty : BinarySearchTree {
         override fun size(): Int = 0
         override fun contains(value: String): Boolean = false
         override fun insert(value: String): BinarySearchTree = Node(value, Empty, Empty)
-
         override fun toString(): String = "()"
     }
-
 
     data class Node(
         val value: String,
