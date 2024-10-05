@@ -24,9 +24,11 @@ func firstThenLowerCase(of: [String], satisfying: (String) -> Bool) -> String? {
 // PROPERTY OF AARON
 struct say {
     let phrase: String
+    
     init (_ new_phrase: String = "") {
         phrase = new_phrase
     }
+    
     func and(_ next_phrase: String) -> say {
         return say(phrase + " " + next_phrase)
     }
@@ -34,10 +36,9 @@ struct say {
 
 // PROPERTY OF AARON
 func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileError> {
-    // There is a non-zero chance I am overcomplicating this
+
     let fileURL: URL = URL(fileURLWithPath: filename)
     // Swift automatically closes files once they leave the scope
-        
     do {
         var lineCount: Int = 0
         let (bytes, _) = try await URLSession.shared.bytes(from: fileURL)
@@ -54,10 +55,8 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
     }
 }
 
-// Write your Quaternion struct here
-//NICHOLAS MEHMET OR SEABAS
-
-//this must be immutable
+// NICHOLAS MEHMET OR SEABAS
+// this must be immutable
 indirect struct Quaternion: CustomStringConvertible {
     let a : Double
     let b : Double
@@ -182,20 +181,20 @@ indirect enum BinarySearchTree: CustomStringConvertible {
         }
     }
 
-    func insert(_ next: String) -> BinarySearchTree {
+    func insert(_ nextStr: String) -> BinarySearchTree {
         switch self {
             case .empty:
-                return .node(next, BinarySearchTree.empty, BinarySearchTree.empty)
+                return .node(nextStr, BinarySearchTree.empty, BinarySearchTree.empty)
             case .node(let value, let left, let right):
-                if (next == value) {
+                if (nextStr == value) {
                     return self
                 }
                 else {
-                    if (next < value) {
-                        return .node(value, left.insert(next), right)
+                    if (nextStr < value) {
+                        return .node(value, left.insert(nextStr), right)
                     }
                     else {
-                        return .node(value, left, right.insert(next))
+                        return .node(value, left, right.insert(nextStr))
                     }
                 }
         }
