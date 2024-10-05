@@ -151,6 +151,7 @@ final record Empty() implements BinarySearchTree {
     public BinarySearchTree insert(String value) {
         return new Node(value, this, this);
     }
+
     @Override
     public String toString() {
         return "()";
@@ -162,10 +163,10 @@ final class Node implements BinarySearchTree {
     private final BinarySearchTree left;
     private final BinarySearchTree right;
     
-    Node(String value, BinarySearchTree right, BinarySearchTree left) {
+    Node(String value, BinarySearchTree left, BinarySearchTree right) {
         this.value = value;
-        this.right = right;
         this.left = left;
+        this.right = right;
     }
     
     @Override
@@ -198,5 +199,3 @@ final class Node implements BinarySearchTree {
         return "(" + emptyOrNot(left) + value + emptyOrNot(right) + ")";
     }
 }
-
-// // UNFINISHED UNFINISHED

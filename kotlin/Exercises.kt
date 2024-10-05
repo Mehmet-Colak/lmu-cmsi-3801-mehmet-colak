@@ -15,13 +15,11 @@ fun change(amount: Long): Map<Int, Long> {
     return counts
 }
 
-// PROPERTY OF AARON (Translated from Swift code)
 fun firstThenLowerCase(of: List<String>, predicate: (String) -> Boolean): String? {
     val filtered: List<String> = of.filter(predicate)
     return (if (!filtered.isEmpty()) filtered[0] else null)?.lowercase()
 }
 
-// PROPERTY OF AARON (From the original Swift)
 class say (new_phrase: String = "") {
     val phrase: String = new_phrase
 
@@ -30,11 +28,9 @@ class say (new_phrase: String = "") {
     }
 }
 
-// PROPERTY OF AARON
 @Throws(IOException::class)
 fun meaningfulLineCount(filename: String): Long {
   File(filename).bufferedReader().use {
-    // Based on the old Swift function
     return it.readLines().map { 
         it.trim() 
     }.filter{ 
@@ -45,7 +41,6 @@ fun meaningfulLineCount(filename: String): Long {
   }
 }
 
-// PROPERTY OF AARON MEARNS
 data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double) {
     // This takes the place of static member variables
     companion object {
@@ -65,7 +60,6 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         return Quaternion(this.a + other.a, this.b + other.b, this.c + other.c, this.d + other.d)
     }
 
-    // Shamelessly pasted from the Python code
     operator fun times(other: Quaternion): Quaternion {
         val mul_a: Double = this.a * other.a - this.b * other.b - this.c * other.c - this.d * other.d
         val mul_b: Double = this.a * other.b + this.b * other.a + this.c * other.d - this.d * other.c
@@ -82,7 +76,6 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         return Quaternion(this.a, -this.b, -this.c, -this.d)
     }
 
-    // Translated from the original Python
     override fun toString(): String {
         fun coefToString(coef: Double, comp: String): String {
             val sign: String = if (coef >= 0) "+" else "-"
@@ -106,7 +99,6 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
     }
 }
 
-//SEABASS (Translated from Swift code)
 sealed interface BinarySearchTree {
     fun size(): Int
     fun contains(value: String): Boolean
