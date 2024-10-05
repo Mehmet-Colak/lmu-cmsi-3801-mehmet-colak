@@ -17,7 +17,7 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
 
 func firstThenLowerCase(of: [String], satisfying: (String) -> Bool) -> String? {
     let filtered: Array<String> = of.filter(satisfying)
-    return !filtered.isEmpty ? filtered[0].lowercased() : nil
+    return (!filtered.isEmpty ? filtered[0] : nil)?.lowercased()
 }
 
 struct say {
@@ -33,10 +33,9 @@ struct say {
 }
 
 func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileError> {
-
-    let fileURL: URL = URL(fileURLWithPath: filename)
     // Swift automatically closes files once they leave the scope
     do {
+        let fileURL: URL = URL(fileURLWithPath: filename)
         var lineCount: Int = 0
         let (bytes, _) = try await URLSession.shared.bytes(from: fileURL)
         for try await line in bytes.lines {
@@ -46,8 +45,7 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
             }
         }
         return .success(lineCount)
-    }
-    catch{
+    } catch {
         return .failure(NoSuchFileError())
     }
 }
@@ -55,7 +53,7 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
 struct Quaternion: CustomStringConvertible {
     // NMK: Looked this up, private(set) allows you to set a default value while still allowing the
     // default initializer to assign user given values to fields
-    // and making it immutable to the consumer through privatizing the otherwise unsafe var :NMK
+    // and making it immutable to the consumer through privatizing the otherwise mutable var :NMK
     private(set) var a: Double = 0
     private(set) var b: Double = 0
     private(set) var c: Double = 0
@@ -66,12 +64,10 @@ struct Quaternion: CustomStringConvertible {
     static let J = Quaternion(a: 0.0, b: 0.0, c: 1.0, d: 0.0)
     static let K = Quaternion(a: 0.0, b: 0.0, c: 0.0, d: 1.0)
 
-    //overload add
     static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
         return Quaternion(a: lhs.a + rhs.a, b: lhs.b + rhs.b, c: lhs.c + rhs.c, d: lhs.d + rhs.d)
     }
 
-    //overload multiply
     static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
         let newA = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
         let newB = lhs.b * rhs.a + lhs.a * rhs.b + lhs.c * rhs.d - lhs.d * rhs.c
@@ -80,18 +76,14 @@ struct Quaternion: CustomStringConvertible {
         return Quaternion(a: newA, b: newB, c: newC, d: newD)
     }
 
-    //coefficients
     var coefficients: [Double] {
         return [a, b, c, d]
     }
 
-
-    //conjugation
     var conjugate: Quaternion {
         return Quaternion(a: a, b: -b, c: -c, d: -d)
     }
 
-    //value based equality
     static func == (lhs: Quaternion, rhs: Quaternion) -> Bool {
         return lhs.a == rhs.a && lhs.b == rhs.b && lhs.c == rhs.c && lhs.d == rhs.d
     }
@@ -103,7 +95,6 @@ struct Quaternion: CustomStringConvertible {
         return coeff >= 0 ? "+" : ""
     }
 
-    //str representation
     var description: String {
         let coeffs: [Double] = self.coefficients
         let dims = ["", "i", "j", "k"]
@@ -127,7 +118,7 @@ struct Quaternion: CustomStringConvertible {
             return "0"
         } else {
             if coeffStr.first == "+" {
-                coeffStr.removeFirst() // Remove the leading "+"
+                coeffStr.removeFirst()
             }
             return coeffStr
         }
@@ -152,39 +143,38 @@ indirect enum BinarySearchTree: CustomStringConvertible {
             case .empty:
                 return "()"
             case .node(let value, let left, let right):
-                // slightly janky solution to allow for .empty's default case
-                var retStr: String = "("
+                var treeStr: String = "("
                 switch left {
                     case .empty:
                         break
                     case .node:
-                        retStr += "\(left)"
+                        treeStr += "\(left)"
                 }
-                retStr += "\(value)"
+                treeStr += "\(value)"
                 switch right {
                     case .empty:
                         break
                     case .node:
-                        retStr += "\(right)"
+                        treeStr += "\(right)"
                 }
-                return retStr + ")"
+                return treeStr + ")"
         }
     }
 
-    func insert(_ nextStr: String) -> BinarySearchTree {
+    func insert(_ nextVal: String) -> BinarySearchTree {
         switch self {
             case .empty:
-                return .node(nextStr, BinarySearchTree.empty, BinarySearchTree.empty)
+                return .node(nextVal, BinarySearchTree.empty, BinarySearchTree.empty)
             case .node(let value, let left, let right):
-                if (nextStr == value) {
+                if (nextVal == value) {
                     return self
                 }
                 else {
-                    if (nextStr < value) {
-                        return .node(value, left.insert(nextStr), right)
+                    if (nextVal < value) {
+                        return .node(value, left.insert(nextVal), right)
                     }
                     else {
-                        return .node(value, left, right.insert(nextStr))
+                        return .node(value, left, right.insert(nextVal))
                     }
                 }
         }

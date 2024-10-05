@@ -97,7 +97,6 @@ expect("\(Quaternion(a: 0, b: -1, c:  0, d: 2.25))" == "-i+2.25k")
 expect("\(Quaternion(a: -20, b: -1.75, c: 13, d: -2.25))" == "-20.0-1.75i+13.0j-2.25k")
 expect("\(Quaternion(a: -1, b: -2, c: 0, d: 0))" == "-1.0-2.0i")
 expect("\(Quaternion(a: 1, b: 0, c: -2, d: 5))" == "1.0-2.0j+5.0k")
-print("\(Quaternion(a: 1, b: 0, c: -2, d: 5))")
 
 suite("BinarySearchTree");
 var t: BinarySearchTree = .empty

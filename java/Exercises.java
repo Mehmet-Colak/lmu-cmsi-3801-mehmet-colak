@@ -3,9 +3,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Predicate;
-
-import javax.lang.model.type.UnionType;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,12 +35,10 @@ public class Exercises {
         return new sayer(phrase);
     }
 
-    public static record sayer (String phrase){
-        
-        public sayer and (String message){
+    public static record sayer(String phrase){
+        public sayer and(String message){
             return new sayer(phrase + " " + message);
         }
-
     }
 
     public static int meaningfulLineCount(String filename) throws IOException {
@@ -180,11 +175,11 @@ final class Node implements BinarySearchTree {
     }
 
     @Override
-    public BinarySearchTree insert(String value) {
-        if (value.compareTo(this.value) < 0) {
-            return new Node(this.value, this.left.insert(value), this.right);
-        } else if (value.compareTo(this.value) > 0) {
-            return new Node(this.value, this.left, this.right.insert(value));
+    public BinarySearchTree insert(String newVal) {
+        if (newVal.compareTo(this.value) < 0) {
+            return new Node(this.value, this.left.insert(newVal), this.right);
+        } else if (newVal.compareTo(this.value) > 0) {
+            return new Node(this.value, this.left, this.right.insert(newVal));
         } else {
             return this;
         }

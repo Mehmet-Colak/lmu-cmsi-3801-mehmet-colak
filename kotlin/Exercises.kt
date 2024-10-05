@@ -30,7 +30,7 @@ class say (new_phrase: String = "") {
 
 @Throws(IOException::class)
 fun meaningfulLineCount(filename: String): Long {
-  File(filename).bufferedReader().use {
+File(filename).bufferedReader().use {
     return it.readLines().map { 
         it.trim() 
     }.filter{ 
@@ -38,7 +38,7 @@ fun meaningfulLineCount(filename: String): Long {
     }.filter { 
         it.elementAtOrNull(0) != '#'
     }.count().toLong()
-  }
+    }
 }
 
 data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double) {
@@ -126,11 +126,11 @@ sealed interface BinarySearchTree {
             }
         }
 
-        override fun insert(value: String): BinarySearchTree {
+        override fun insert(newVal: String): BinarySearchTree {
             return when {
-                value == this.value -> this
-              value < this.value -> Node(this.value, left.insert(value), right)
-                else -> Node(this.value, left, right.insert(value))
+                newVal == this.value -> this
+              newVal < this.value -> Node(this.value, left.insert(newVal), right)
+                else -> Node(this.value, left, right.insert(newVal))
             }
         }
 
